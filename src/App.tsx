@@ -118,7 +118,7 @@ const fetchPostsList = async () => {
         icon: "error",
         title: "Delete Failed",
         text: err.response?.data?.message || "Failed to delete post.",
-      });
+      }); 
     }
   };
 
