@@ -24,7 +24,6 @@ export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
 
-  // Form State
   const [editingId, setEditingId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState<Post["category"]>("Community");
