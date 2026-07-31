@@ -16,8 +16,8 @@ export interface Post {
   _id?: string;
   id?: string;
   title: string;
-  category: "Community" | "Safety" | "Alerts" | "Emergency";
-  neighborhood?: string;
+  category: "Neighbourhood" | "Safety" | "Alerts" | "Emergency";
+  neighbourhood?: string;
   author?: string;
   excerpt: string;
   content: string;
