@@ -1,11 +1,16 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL   ;
+const rawBaseUrl =
+  import.meta.env.VITE_API_BASE_URL || "https://waitlistapi.akede.com.ng";
+
+const cleanBaseUrl = rawBaseUrl.trim().replace(/\/+$/, "").replace(/\/api$/, "");
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: `${cleanBaseUrl}/api`,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
-
 
 export interface Post {
   _id?: string;
@@ -33,7 +38,10 @@ export const createPost = async (postData: Post): Promise<Post> => {
   return response.data.data || response.data;
 };
 
-export const updatePost = async (id: string, postData: Partial<Post>): Promise<Post> => {
+export const updatePost = async (
+  id: string,
+  postData: Partial<Post>
+): Promise<Post> => {
   const response = await api.patch(`/news/${id}`, postData);
   return response.data.data || response.data;
 };
