@@ -18,7 +18,7 @@ import {
 
 import type { Post } from "./services/api";
 
-const CATEGORIES = ["Community", "Safety", "Alerts", "Emergency"] as const;
+const CATEGORIES = ["Neighbourhood", "Safety", "Alerts", "Emergency"] as const;
 
 export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -26,8 +26,8 @@ export default function App() {
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState<Post["category"]>("Community");
-  const [neighborhood, setNeighborhood] = useState("");
+  const [category, setCategory] = useState<Post["category"]>("Neighbourhood");
+  const [neighbourhood, setNeighbourhood] = useState("");
   const [author, setAuthor] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
@@ -40,7 +40,7 @@ export default function App() {
     fetchPostsList();
   }, []);
 
-const fetchPostsList = async () => {
+  const fetchPostsList = async () => {
     setLoadingPosts(true);
     try {
       const data = await getPosts();
@@ -63,7 +63,7 @@ const fetchPostsList = async () => {
     setEditingId(targetId);
     setTitle(post.title);
     setCategory(post.category);
-    setNeighborhood(post.neighborhood || "");
+    setNeighbourhood(post.neighbourhood || "");
     setAuthor(post.author || "Akede Product");
     setExcerpt(post.excerpt);
     setContent(post.content);
@@ -75,8 +75,8 @@ const fetchPostsList = async () => {
   const resetForm = () => {
     setEditingId(null);
     setTitle("");
-    setCategory("Community");
-    setNeighborhood("");
+    setCategory("Neighbourhood");
+    setNeighbourhood("");
     setAuthor("");
     setExcerpt("");
     setContent("");
@@ -132,7 +132,7 @@ const fetchPostsList = async () => {
     const payload: Post = {
       title,
       category,
-      neighborhood: neighborhood || "General",
+      neighbourhood: neighbourhood || "General",
       author: author || "Akede Product",
       excerpt,
       content,
@@ -147,7 +147,7 @@ const fetchPostsList = async () => {
         Swal.fire({
           icon: "success",
           title: "Post Updated!",
-          text: "Your neighborhood post was updated successfully.",
+          text: "Your neighbourhood post was updated successfully.",
           timer: 2500,
           showConfirmButton: false,
         });
@@ -156,7 +156,7 @@ const fetchPostsList = async () => {
         Swal.fire({
           icon: "success",
           title: "Published!",
-          text: "Post successfully published to the neighborhood feed!",
+          text: "Post successfully published to the neighbourhood feed!",
           timer: 2500,
           showConfirmButton: false,
         });
@@ -188,17 +188,15 @@ const fetchPostsList = async () => {
         </div>
       </header>
 
-      {/* Main Container */}
       <main className="flex-1 max-w-5xl w-full mx-auto p-6 md:p-10 space-y-10">
-        {/* Form Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="bg-akede-accentGreen p-6 border-b border-green-100 flex justify-between items-center">
             <div className="flex items-center flex-col w-full">
               <h1 className="text-[45px] font-extrabold text-green-600 text-center">
-                {editingId ? "Edit Neighborhood Post" : "Publish Neighborhood Story"}
+                {editingId ? "Edit Neighbourhood Post" : "Publish Neighbourhood Story"}
               </h1>
               <p className="text-sm text-gray-600 mt-1 text-center">
-                Create announcements, safety tips, and neighborhood updates.
+                Create announcements, safety tips, and neighbourhood updates.
               </p>
             </div>
             {editingId && (
@@ -252,13 +250,13 @@ const fetchPostsList = async () => {
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-2">
-                  Target Neighborhood
+                  Target Neighbourhood
                 </label>
                 <input
                   type="text"
                   placeholder="e.g. Lekki Phase 1"
-                  value={neighborhood}
-                  onChange={(e) => setNeighborhood(e.target.value)}
+                  value={neighbourhood}
+                  onChange={(e) => setNeighbourhood(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-akede-green text-sm"
                 />
               </div>
@@ -276,32 +274,6 @@ const fetchPostsList = async () => {
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-akede-green text-sm"
               />
             </div>
-
-            {/* <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-2">
-                Cover Image URL (Optional)
-              </label>
-              <input
-                type="url"
-                placeholder="https://images.unsplash.com/photo-..."
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-akede-green text-sm"
-              />
-            </div> */}
-
-            {/* {imageUrl && (
-              <div className="relative w-full h-36 rounded-xl overflow-hidden border border-gray-200 bg-gray-50 flex items-center justify-center">
-                <img
-                  src={imageUrl}
-                  alt="Preview"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = "none";
-                  }}
-                />
-              </div>
-            )} */}
 
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-2">
@@ -340,7 +312,7 @@ const fetchPostsList = async () => {
                 className="w-4 h-4 rounded border-gray-300 text-akede-green focus:ring-akede-green cursor-pointer"
               />
               <label htmlFor="isPublished" className="text-xs font-bold uppercase tracking-wider text-gray-700 cursor-pointer">
-                Publish immediately to neighborhood feed
+                Publish immediately to neighbourhood feed
               </label>
             </div>
 
@@ -359,14 +331,13 @@ const fetchPostsList = async () => {
               ) : (
                 <>
                   <Send className="w-4 h-4 text-akede-orange" />
-                  <span>Publish to Neighborhood</span>
+                  <span>Publish to Neighbourhood</span>
                 </>
               )}
             </button>
           </form>
         </div>
 
-        {/* Published Posts List */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
           <h2 className="text-lg font-extrabold text-akede-green mb-4 flex items-center space-x-2">
             <FileText className="w-5 h-5 text-akede-orange" />
@@ -404,7 +375,7 @@ const fetchPostsList = async () => {
                             {post.category}
                           </span>
                           <span className="text-xs text-gray-400">
-                            {post.neighborhood}
+                            {post.neighbourhood}
                           </span>
                           {!post.isPublished && (
                             <span className="bg-amber-100 text-amber-700 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full">
@@ -443,361 +414,3 @@ const fetchPostsList = async () => {
     </div>
   );
 }
-
-// import React, { useState, useEffect } from "react";
-// import {
-//   Send,
-//   Trash2,
-//   Edit3,
-//   AlertCircle,
-//   CheckCircle,
-//   Loader2,
-//   X,
-//   FileText,
-// } from "lucide-react";
-// import {
-//   getPosts,
-//   createPost,
-//   updatePost,
-//   deletePost,
-// } from "./services/api";
-
-// import type {
-//     Post
-// } from "./services/api"
-
-// const CATEGORIES = ["Community", "Safety", "Alerts", "Emergency"] as const;
-
-// export default function App() {
-//   const [posts, setPosts] = useState<Post[]>([]);
-//   const [loadingPosts, setLoadingPosts] = useState(true);
-
-//   const [editingId, setEditingId] = useState<string | null>(null);
-//   const [title, setTitle] = useState("");
-//   const [category, setCategory] = useState<Post["category"]>("Community");
-//   const [neighborhood, setNeighborhood] = useState("");
-//   const [author, setAuthor] = useState("");
-//   const [excerpt, setExcerpt] = useState("");
-//   const [content, setContent] = useState("");
-
-//   const [submitting, setSubmitting] = useState(false);
-//   const [status, setStatus] = useState<{ type: "success" | "error"; msg: string } | null>(null);
-
-//   useEffect(() => {
-//     fetchPostsList();
-//   }, []);
-
-//   const fetchPostsList = async () => {
-//     setLoadingPosts(true);
-//     try {
-//       const data = await getPosts();
-//       setPosts(data);
-//     } catch (err) {
-//       console.error("Failed to load posts", err);
-//     } finally {
-//       setLoadingPosts(false);
-//     }
-//   };
-
-//   const handleEditClick = (post: Post) => {
-//     const targetId = post._id || post.id || "";
-//     setEditingId(targetId);
-//     setTitle(post.title);
-//     setCategory(post.category);
-//     setNeighborhood(post.neighborhood);
-//     setAuthor(post.author || "Akede Product");
-//     setExcerpt(post.excerpt);
-//     setContent(post.content);
-//     window.scrollTo({ top: 0, behavior: "smooth" });
-//   };
-
-//   const resetForm = () => {
-//     setEditingId(null);
-//     setTitle("");
-//     setCategory("Community");
-//     setNeighborhood("");
-//     setAuthor("");
-//     setExcerpt("");
-//     setContent("");
-//   };
-
-//   const handleDelete = async (id: string) => {
-//     if (!confirm("Are you sure you want to delete this post?")) return;
-
-//     try {
-//       await deletePost(id);
-//       setStatus({ type: "success", msg: "Post deleted successfully!" });
-//       fetchPostsList();
-//     } catch (err: any) {
-//       setStatus({ type: "error", msg: "Failed to delete post." });
-//     }
-//   };
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!title || !excerpt || !content) {
-//       setStatus({ type: "error", msg: "Title, Excerpt, and Content are required." });
-//       return;
-//     }
-
-//     setSubmitting(true);
-//     setStatus(null);
-
-//     const payload: Post = {
-//       title,
-//       category,
-//       neighborhood,
-//       author,
-//       excerpt,
-//       content,
-//     };
-
-//     try {
-//       if (editingId) {
-//         await updatePost(editingId, payload);
-//         setStatus({ type: "success", msg: "Post updated successfully!" });
-//       } else {
-//         await createPost(payload);
-//         setStatus({ type: "success", msg: "Post published to neighborhood feed!" });
-//       }
-//       resetForm();
-//       fetchPostsList();
-//     } catch (err: any) {
-//       setStatus({
-//         type: "error",
-//         msg: err.response?.data?.message || "Action failed. Check your API endpoint.",
-//       });
-//     } finally {
-//       setSubmitting(false);
-//     }
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-akede-bg flex flex-col">
-//       <header className="bg-akede-green text-white py-4 px-8 shadow-md flex justify-center items-center border-b-4 border-akede-orange">
-//         <div className="flex items-center space-x-3">
-//           <span className="text-3xl font-black tracking-wider">AKEDE</span>
-//           <span className="bg-akede-lightGreen text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-widest text-akede-accentGreen">
-//             News Portal
-//           </span>
-//         </div>
-//       </header>
-
-//       <main className="flex-1 max-w-5xl w-full mx-auto p-6 md:p-10 space-y-10">
-        
-//         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-//           <div className="bg-akede-accentGreen p-6 border-b border-green-100 flex justify-center items-center">
-//             <div className="flex items-center flex-col">
-//               <h1 className="text-[45px] font-extrabold text-green-600">
-//                 {editingId ? "Edit Neighborhood Post" : "Publish Neighborhood Story"}
-//               </h1>
-//               <p className="text-sm text-gray-600 mt-1">
-//                 Create announcements, safety tips, and neighborhood updates.
-//               </p>
-//             </div>
-//             {editingId && (
-//               <button
-//                 onClick={resetForm}
-//                 className="flex items-center space-x-1 text-xs font-bold text-gray-500 hover:text-rose-600 bg-white px-3 py-1.5 rounded-lg border border-gray-200"
-//               >
-//                 <X className="w-3.5 h-3.5" />
-//                 <span>Cancel Edit</span>
-//               </button>
-//             )}
-//           </div>
-
-//           <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
-//             {status && (
-//               <div
-//                 className={`p-4 rounded-xl flex items-center space-x-3 ${
-//                   status.type === "success"
-//                     ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-//                     : "bg-rose-50 text-rose-800 border border-rose-200"
-//                 }`}
-//               >
-//                 {status.type === "success" ? (
-//                   <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
-//                 ) : (
-//                   <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
-//                 )}
-//                 <span className="text-sm font-medium">{status.msg}</span>
-//               </div>
-//             )}
-
-//             <div className="flex flex-col items-center">
-//               <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-3">
-//                 Post Category <span className="text-red-600"> * </span>
-//               </label>
-//               <div className="flex flex-wrap gap-2">
-//                 {CATEGORIES.map((cat) => (
-//                   <button
-//                     key={cat}
-//                     type="button"
-//                     onClick={() => setCategory(cat)}
-//                     className={`px-4 py-2 rounded-full text-xs font-bold transition border cursor-pointer ${
-//                       category === cat
-//                         ? "bg-akede-green text-white border-akede-green"
-//                         : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
-//                     }`}
-//                   >
-//                     {cat}
-//                   </button>
-//                 ))}
-//               </div>
-//             </div>
-
-//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//               <div>
-//                 <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-2">
-//                   Title *
-//                 </label>
-//                 <input
-//                   type="text"
-//                   placeholder="e.g. How Magodo Phase 2 cut response time"
-//                   value={title}
-//                   onChange={(e) => setTitle(e.target.value)}
-//                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-akede-green text-sm"
-//                   required
-//                 />
-//               </div>
-
-//               <div>
-//                 <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-2">
-//                   Target Neighborhood
-//                 </label>
-//                 <input
-//                   type="text"
-//                   placeholder="e.g. Lekki Phase 1"
-//                   value={neighborhood}
-//                   onChange={(e) => setNeighborhood(e.target.value)}
-//                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-akede-green text-sm"
-//                 />
-//               </div>
-//             </div>
-
-//             <div>
-//               <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-2">
-//                 Author
-//               </label>
-//               <input
-//                 type="text"
-//                 placeholder="e.g. Akede Product"
-//                 value={author}
-//                 onChange={(e) => setAuthor(e.target.value)}
-//                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-akede-green text-sm"
-//               />
-//             </div>
-
-//             <div>
-//               <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-2">
-//                 Excerpt (Card Summary) *
-//               </label>
-//               <input
-//                 type="text"
-//                 placeholder="Brief 1-2 sentence preview for the card layout..."
-//                 value={excerpt}
-//                 onChange={(e) => setExcerpt(e.target.value)}
-//                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-akede-green text-sm"
-//                 required
-//               />
-//             </div>
-
-//             <div>
-//               <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-2">
-//                 Full Content *
-//               </label>
-//               <textarea
-//                 rows={5}
-//                 placeholder="Detailed story content..."
-//                 value={content}
-//                 onChange={(e) => setContent(e.target.value)}
-//                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-akede-green text-sm resize-none"
-//                 required
-//               />
-//             </div>
-
-//             <button
-//               type="submit"
-//               disabled={submitting}
-//               className="w-full bg-akede-green hover:bg-akede-lightGreen text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition shadow-md disabled:opacity-50 cursor-pointer"
-//             >
-//               {submitting ? (
-//                 <Loader2 className="w-5 h-5 animate-spin" />
-//               ) : editingId ? (
-//                 <>
-//                   <Edit3 className="w-4 h-4 text-akede-orange" />
-//                   <span>Update Post</span>
-//                 </>
-//               ) : (
-//                 <>
-//                   <Send className="w-4 h-4 text-akede-orange" />
-//                   <span>Publish to Neighborhood</span>
-//                 </>
-//               )}
-//             </button>
-//           </form>
-//         </div>
-
-//         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
-//           <h2 className="text-lg font-extrabold text-akede-green mb-4 flex items-center space-x-2">
-//             <FileText className="w-5 h-5 text-akede-orange" />
-//             <span>Published Posts ({posts.length})</span>
-//           </h2>
-
-//           {loadingPosts ? (
-//             <div className="py-12 flex justify-center text-gray-400">
-//               <Loader2 className="w-6 h-6 animate-spin" />
-//             </div>
-//           ) : posts.length === 0 ? (
-//             <p className="text-sm text-gray-500 text-center py-8">
-//               No posts found. Publish your first update above!
-//             </p>
-//           ) : (
-//             <div className="space-y-4">
-//               {posts.map((post) => {
-//                 const postId = post._id || post.id || "";
-//                 return (
-//                   <div
-//                     key={postId}
-//                     className="p-4 rounded-xl border border-gray-100 bg-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-gray-200 transition"
-//                   >
-//                     <div className="space-y-1">
-//                       <div className="flex items-center space-x-2">
-//                         <span className="bg-akede-accentGreen text-akede-green text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-//                           {post.category}
-//                         </span>
-//                         <span className="text-xs text-gray-400">
-//                           {post.neighborhood}
-//                         </span>
-//                       </div>
-//                       <h3 className="font-bold text-gray-800 text-sm">{post.title}</h3>
-//                       <p className="text-xs text-gray-500 line-clamp-1">{post.excerpt}</p>
-//                     </div>
-
-//                     <div className="flex items-center space-x-2 shrink-0">
-//                       <button
-//                         onClick={() => handleEditClick(post)}
-//                         className="p-2 bg-white text-gray-600 hover:text-akede-green rounded-lg border border-gray-200 transition"
-//                         title="Edit Post"
-//                       >
-//                         <Edit3 className="w-4 h-4" />
-//                       </button>
-//                       <button
-//                         onClick={() => handleDelete(postId)}
-//                         className="p-2 bg-white text-gray-600 hover:text-rose-600 rounded-lg border border-gray-200 transition"
-//                         title="Delete Post"
-//                       >
-//                         <Trash2 className="w-4 h-4" />
-//                       </button>
-//                     </div>
-//                   </div>
-//                 );
-//               })}
-//             </div>
-//           )}
-//         </div>
-
-//       </main>
-//     </div>
-//   );
-// }
