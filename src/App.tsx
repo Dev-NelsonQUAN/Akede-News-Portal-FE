@@ -19,7 +19,7 @@ import { getPosts, createPost, updatePost, deletePost } from "./services/api";
 
 import type { Post } from "./services/api";
 
-const CATEGORIES = ["Neighbourhood", "Safety", "Alerts", "Emergency"] as const;
+const CATEGORIES = ["Neighbourhood", "Safety"] as const;
 
 const LGA_OPTIONS = [
   "Ajeromi-Ifelodun",
@@ -42,6 +42,7 @@ export default function App() {
   const [neighbourhood, setNeighbourhood] = useState("");
   const [author, setAuthor] = useState("Akede News Desk");
   const [source, setSource] = useState("");
+  const [sourceUrl, setSourceUrl] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -158,6 +159,7 @@ export default function App() {
     setNeighbourhood(post.neighbourhood || "");
     setAuthor(post.author || "Akede News Desk");
     setSource(post.source || "");
+    setSourceUrl(post.sourceUrl || "");
     setExcerpt(post.excerpt || "");
     setContent(post.content || "");
     setImageUrl(post.imageUrl || "");
@@ -175,6 +177,7 @@ export default function App() {
     setNeighbourhood("");
     setAuthor("Akede News Desk");
     setSource("");
+    setSourceUrl("");
     setExcerpt("");
     setContent("");
     setImageUrl("");
@@ -264,6 +267,7 @@ export default function App() {
         neighbourhood: neighbourhood.trim() || null,
         author: author || "Akede News Desk",
         source: source.trim() || "Online Media",
+        sourceUrl: sourceUrl.trim() || null,
         excerpt,
         content,
         imageUrl: finalImageUrl ? finalImageUrl.trim() : null,
@@ -348,7 +352,6 @@ export default function App() {
             </div>
 
             <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-5">
-              {/* Category */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-2">
                   Category *
@@ -371,7 +374,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Title & Specific Area */}
               <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-1.5">
@@ -401,9 +403,8 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Target LGA Selection */}
               <div className="p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100 space-y-2">
-                <label className="flex text-xs font-black uppercase tracking-wider text-emerald-800  items-center gap-1.5">
+                <label className="flex text-xs font-black uppercase tracking-wider text-emerald-800 items-center gap-1.5">
                   <MapPin className="w-4 h-4 text-emerald-600" />
                   Target LGA (Mandatory) *
                 </label>
@@ -422,7 +423,6 @@ export default function App() {
                 </select>
               </div>
 
-              {/* Author & Source Details */}
               <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-1.5">
@@ -449,10 +449,22 @@ export default function App() {
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-akede-green text-sm"
                   />
                 </div>
-              </div>
 
-              {/* Tags */}
-              <div>
+              </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-1.5">
+                    Source URL
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="https://..."
+                    value={sourceUrl}
+                    onChange={(e) => setSourceUrl(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-akede-green text-sm"
+                  />
+                </div>
+
+              {/* <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-1.5">
                   Niche Tags (Press Enter or Comma)
                 </label>
@@ -486,9 +498,8 @@ export default function App() {
                     ))}
                   </div>
                 )}
-              </div>
+              </div> */}
 
-              {/* Cover Photo Upload */}
               <div>
                 <div className="flex justify-between items-center mb-1.5">
                   <label className="block text-xs font-bold uppercase tracking-wider text-akede-green">
@@ -588,7 +599,6 @@ export default function App() {
                 />
               </div>
 
-              {/* Content */}
               <div>
                 <div className="flex justify-between items-center mb-1.5">
                   <label className="block text-xs font-bold uppercase tracking-wider text-akede-green">
@@ -637,9 +647,7 @@ export default function App() {
             </form>
           </div>
 
-          {/* Sidebar Area */}
           <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-20">
-            {/* Live Preview Card */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-5">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-bold uppercase tracking-wider text-akede-green">
@@ -679,23 +687,33 @@ export default function App() {
                     {excerpt || "Card summary snippet..."}
                   </p>
 
-                  {/* Source & Location Meta */}
                   <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-[10px] text-gray-500 font-semibold">
                     <span>
                       {neighbourhood ? `${neighbourhood}, ${lgaTag || "LGA"}` : lgaTag || "General LGA News"}
                     </span>
                     {source && (
-                      <span className="flex items-center gap-1 text-emerald-700">
-                        <LinkIcon className="w-2.5 h-2.5" />
-                        {source}
-                      </span>
+                      sourceUrl ? (
+                        <a
+                          href={sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-emerald-700 hover:underline"
+                        >
+                          <LinkIcon className="w-2.5 h-2.5" />
+                          {source}
+                        </a>
+                      ) : (
+                        <span className="flex items-center gap-1 text-emerald-700">
+                          <LinkIcon className="w-2.5 h-2.5" />
+                          {source}
+                        </span>
+                      )
                     )}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Published Feed List */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-5">
               <h2 className="text-base sm:text-lg font-extrabold text-akede-green mb-4 flex items-center space-x-2">
                 <FileText className="w-5 h-5 text-akede-orange" />
