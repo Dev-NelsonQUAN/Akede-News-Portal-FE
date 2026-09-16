@@ -10,7 +10,7 @@ import {
   Image as ImageIcon,
   UploadCloud,
   RefreshCw,
-  Tag,
+  // Tag,
   MapPin,
   Globe,
   Link as LinkIcon,
@@ -49,7 +49,7 @@ export default function App() {
 
   const [lgaTag, setLgaTag] = useState<LGAType | "">("");
   const [tags, setTags] = useState<string[]>([]);
-  const [tagInput, setTagInput] = useState("");
+  // const [tagInput, setTagInput] = useState("");
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
@@ -115,20 +115,20 @@ export default function App() {
     processSelectedFile(file);
   };
 
-  const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if ((e.key === "Enter" || e.key === ",") && tagInput.trim()) {
-      e.preventDefault();
-      const cleaned = tagInput.trim().toLowerCase().replace(/^#/, "");
-      if (cleaned && !tags.includes(cleaned)) {
-        setTags([...tags, cleaned]);
-      }
-      setTagInput("");
-    }
-  };
+  // const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if ((e.key === "Enter" || e.key === ",") && tagInput.trim()) {
+  //     e.preventDefault();
+  //     const cleaned = tagInput.trim().toLowerCase().replace(/^#/, "");
+  //     if (cleaned && !tags.includes(cleaned)) {
+  //       setTags([...tags, cleaned]);
+  //     }
+  //     setTagInput("");
+  //   }
+  // };
 
-  const handleRemoveTag = (tagToRemove: string) => {
-    setTags(tags.filter((t) => t !== tagToRemove));
-  };
+  // const handleRemoveTag = (tagToRemove: string) => {
+  //   setTags(tags.filter((t) => t !== tagToRemove));
+  // };
 
   const uploadToCloudinary = async (file: File): Promise<string> => {
     const formData = new FormData();
@@ -185,7 +185,7 @@ export default function App() {
     setImageFile(null);
     setLgaTag("");
     setTags([]);
-    setTagInput("");
+    // setTagInput("");
   };
 
   const handleDelete = async (id: string) => {
