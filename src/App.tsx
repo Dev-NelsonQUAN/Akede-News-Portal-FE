@@ -16,12 +16,12 @@ import {
   Link as LinkIcon,
 } from "lucide-react";
 import { getPosts, createPost, updatePost, deletePost } from "./services/api";
-
 import type { Post } from "./services/api";
 
 const CATEGORIES = ["Neighbourhood", "Safety"] as const;
 
 const LGA_OPTIONS = [
+  "General",
   "Ajeromi-Ifelodun",
   "Amuwo-Odofin",
   "Oshodi-Isolo",
@@ -406,7 +406,7 @@ export default function App() {
               <div className="p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100 space-y-2">
                 <label className="flex text-xs font-black uppercase tracking-wider text-emerald-800 items-center gap-1.5">
                   <MapPin className="w-4 h-4 text-emerald-600" />
-                  Target LGA (Mandatory) *
+                  Target LGA (Mandatory)
                 </label>
                 <select
                   value={lgaTag}
@@ -414,10 +414,10 @@ export default function App() {
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-akede-green text-sm bg-white"
                   required
                 >
-                  <option value="">-- Select Target LGA --</option>
+                  <option value="" disabled>-- Select Target LGA --</option>
                   {LGA_OPTIONS.map((lga) => (
                     <option key={lga} value={lga}>
-                      {lga}
+                      {lga === "General" ? "General (All LGAs)" : lga}
                     </option>
                   ))}
                 </select>
@@ -449,21 +449,22 @@ export default function App() {
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-akede-green text-sm"
                   />
                 </div>
-
               </div>
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-1.5">
-                    Source URL
-                  </label>
-                  <input
-                    type="url"
-                    placeholder="https://..."
-                    value={sourceUrl}
-                    onChange={(e) => setSourceUrl(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-akede-green text-sm"
-                  />
-                </div>
 
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-1.5">
+                  Source URL
+                </label>
+                <input
+                  type="url"
+                  placeholder="https://..."
+                  value={sourceUrl}
+                  onChange={(e) => setSourceUrl(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-akede-green text-sm"
+                />
+              </div>
+
+              {/* Niche Tags (Commented out) */}
               {/* <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-1.5">
                   Niche Tags (Press Enter or Comma)
@@ -584,7 +585,6 @@ export default function App() {
                 )}
               </div>
 
-              {/* Excerpt */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-akede-green mb-1.5">
                   Card Preview Text *
@@ -676,7 +676,7 @@ export default function App() {
                     {lgaTag && (
                       <span className="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-0.5">
                         <Globe className="w-2.5 h-2.5" />
-                        {lgaTag}
+                        {lgaTag === "General" ? "All LGAs" : lgaTag}
                       </span>
                     )}
                   </div>
@@ -689,7 +689,11 @@ export default function App() {
 
                   <div className="pt-2 border-t border-gray-100 flex items-center justify-between text-[10px] text-gray-500 font-semibold">
                     <span>
-                      {neighbourhood ? `${neighbourhood}, ${lgaTag || "LGA"}` : lgaTag || "General LGA News"}
+                      {neighbourhood
+                        ? `${neighbourhood}, ${lgaTag === "General" ? "All LGAs" : lgaTag || "LGA"}`
+                        : lgaTag === "General"
+                        ? "General LGA News"
+                        : lgaTag || "General LGA News"}
                     </span>
                     {source && (
                       sourceUrl ? (
@@ -752,7 +756,7 @@ export default function App() {
                               </span>
                               {post.lgaTag && (
                                 <span className="text-[9px] text-gray-500 font-bold truncate">
-                                  • {post.lgaTag}
+                                  • {post.lgaTag === "General" ? "All LGAs" : post.lgaTag}
                                 </span>
                               )}
                             </div>
